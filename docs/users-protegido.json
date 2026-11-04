@@ -1,0 +1,10 @@
+[
+  {
+    "id": "5ef7e744-6378-410d-be17-5935120cbde2",
+    "name": "Estudiante Demo",
+    "email": "demo@example.com",
+    "createdAt": "2026-11-04T22:56:42.315Z",
+    "isActive": true,
+    "password": "[OCULTO]"
+  }
+]

@@ -1,0 +1,37 @@
+GET /api/tasks 200 3.721 ms
+POST /api/tasks 201 47.910 ms
+GET /api/tasks/4 200 0.758 ms
+PUT /api/tasks/4 200 2.176 ms
+GET /api/tasks?status=DONE&project=DASW&sort=title 200 0.347 ms
+GET /api/tasks/stats 200 0.287 ms
+POST /api/tasks 400 1.287 ms
+DELETE /api/tasks/4 204 0.210 ms
+GET /api/tasks/4 404 0.956 ms
+PUT /api/tasks/999 404 1.490 ms
+DELETE /api/tasks/999 404 0.453 ms
+POST /api/v1/tasks 201 0.946 ms
+DELETE /api/v1/tasks/4 200 0.199 ms
+✔ CRUD completo, filtros, stats, errores y compatibilidad original (206.1539ms)
+POST /registro 201 62.017 ms
+POST /registro 400 2.869 ms
+POST /registro 409 5.219 ms
+POST /login 200 47.909 ms
+POST /login 401 46.129 ms
+POST /login 401 1.852 ms
+POST /logout 200 0.515 ms
+POST /registro 201 58.691 ms
+POST /registro 409 77.291 ms
+✔ Seis casos de autenticación y persistencia sin secretos en respuestas (270.2956ms)
+GET /api/health 200 0.382 ms
+GET /api/health 200 0.166 ms
+POST /registro 400 1.159 ms
+GET /inexistente 404 0.252 ms
+✔ Helmet, CORS, JSON inválido y errores centralizados (9.1607ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1288.3682

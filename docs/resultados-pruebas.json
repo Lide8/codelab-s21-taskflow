@@ -1,0 +1,291 @@
+[
+  {
+    "caso": "Listado",
+    "method": "GET",
+    "route": "/api/tasks",
+    "expected": 200,
+    "actual": 200,
+    "response": [
+      {
+        "id": 1,
+        "title": "Diseñar API REST",
+        "status": "TODO",
+        "project": "TaskFlow"
+      },
+      {
+        "id": 2,
+        "title": "Separar rutas",
+        "status": "DONE",
+        "project": "TaskFlow"
+      },
+      {
+        "id": 3,
+        "title": "Preparar pruebas",
+        "status": "TODO",
+        "project": "DASW"
+      }
+    ]
+  },
+  {
+    "caso": "Crear tarea",
+    "method": "POST",
+    "route": "/api/tasks",
+    "expected": 201,
+    "actual": 201,
+    "response": {
+      "id": 4,
+      "title": "Nueva tarea",
+      "status": "TODO",
+      "project": "TaskFlow"
+    }
+  },
+  {
+    "caso": "Obtener tarea",
+    "method": "GET",
+    "route": "/api/tasks/4",
+    "expected": 200,
+    "actual": 200,
+    "response": {
+      "id": 4,
+      "title": "Nueva tarea",
+      "status": "TODO",
+      "project": "TaskFlow"
+    }
+  },
+  {
+    "caso": "Actualizar tarea",
+    "method": "PUT",
+    "route": "/api/tasks/4",
+    "expected": 200,
+    "actual": 200,
+    "response": {
+      "id": 4,
+      "title": "Finalizada",
+      "status": "DONE",
+      "project": "DASW"
+    }
+  },
+  {
+    "caso": "Filtros y orden",
+    "method": "GET",
+    "route": "/api/tasks?status=DONE&project=DASW&sort=title",
+    "expected": 200,
+    "actual": 200,
+    "response": [
+      {
+        "id": 4,
+        "title": "Finalizada",
+        "status": "DONE",
+        "project": "DASW"
+      }
+    ]
+  },
+  {
+    "caso": "Estadísticas",
+    "method": "GET",
+    "route": "/api/tasks/stats",
+    "expected": 200,
+    "actual": 200,
+    "response": {
+      "total": 4,
+      "todo": 2,
+      "done": 2
+    }
+  },
+  {
+    "caso": "Body tarea inválido",
+    "method": "POST",
+    "route": "/api/tasks",
+    "expected": 400,
+    "actual": 400,
+    "response": {
+      "mensaje": "Datos invalidos",
+      "errores": [
+        {
+          "path": "title",
+          "msg": "El titulo es obligatorio",
+          "location": "body"
+        },
+        {
+          "path": "status",
+          "msg": "El estado no es valido",
+          "location": "body"
+        }
+      ]
+    }
+  },
+  {
+    "caso": "Eliminar sin body",
+    "method": "DELETE",
+    "route": "/api/tasks/4",
+    "expected": 204,
+    "actual": 204,
+    "response": null
+  },
+  {
+    "caso": "ID inexistente",
+    "method": "GET",
+    "route": "/api/tasks/4",
+    "expected": 404,
+    "actual": 404,
+    "response": {
+      "mensaje": "No se encontró la tarea ",
+      "id": 4
+    }
+  },
+  {
+    "caso": "PUT inexistente",
+    "method": "PUT",
+    "route": "/api/tasks/999",
+    "expected": 404,
+    "actual": 404,
+    "response": {
+      "mensaje": "Tarea no encontrada"
+    }
+  },
+  {
+    "caso": "DELETE inexistente",
+    "method": "DELETE",
+    "route": "/api/tasks/999",
+    "expected": 404,
+    "actual": 404,
+    "response": {
+      "mensaje": "Tarea no encontrada"
+    }
+  },
+  {
+    "caso": "Compatibilidad crear v1",
+    "method": "POST",
+    "route": "/api/v1/tasks",
+    "expected": 201,
+    "actual": 201,
+    "response": {
+      "id": 4,
+      "title": "Legacy",
+      "status": "TODO",
+      "project": "TaskFlow"
+    }
+  },
+  {
+    "caso": "Compatibilidad DELETE 200 v1",
+    "method": "DELETE",
+    "route": "/api/v1/tasks/4",
+    "expected": 200,
+    "actual": 200,
+    "response": {
+      "mensaje": "Tarea Eliminada",
+      "tareaEliminada": {
+        "id": 4,
+        "title": "Legacy",
+        "status": "TODO",
+        "project": "TaskFlow"
+      }
+    }
+  },
+  {
+    "caso": "Registro válido",
+    "method": "POST",
+    "route": "/registro",
+    "expected": 201,
+    "actual": 201,
+    "response": {
+      "id": "5ef7e744-6378-410d-be17-5935120cbde2",
+      "name": "Estudiante Demo",
+      "email": "demo@example.com",
+      "createdAt": "2026-11-04T22:56:42.315Z",
+      "isActive": true
+    }
+  },
+  {
+    "caso": "Validación fallida",
+    "method": "POST",
+    "route": "/registro",
+    "expected": 400,
+    "actual": 400,
+    "response": {
+      "mensaje": "Datos invalidos",
+      "errores": [
+        {
+          "path": "name",
+          "msg": "El nombre es obligatorio",
+          "location": "body"
+        },
+        {
+          "path": "email",
+          "msg": "El email no es válido",
+          "location": "body"
+        },
+        {
+          "path": "password",
+          "msg": "La contraseña debe tener entre 8 y 1024 caracteres",
+          "location": "body"
+        }
+      ]
+    }
+  },
+  {
+    "caso": "Email repetido normalizado",
+    "method": "POST",
+    "route": "/registro",
+    "expected": 409,
+    "actual": 409,
+    "response": {
+      "mensaje": "El email ya está registrado"
+    }
+  },
+  {
+    "caso": "Login válido",
+    "method": "POST",
+    "route": "/login",
+    "expected": 200,
+    "actual": 200,
+    "response": {
+      "id": "5ef7e744-6378-410d-be17-5935120cbde2",
+      "name": "Estudiante Demo",
+      "email": "demo@example.com",
+      "createdAt": "2026-11-04T22:56:42.315Z",
+      "isActive": true
+    }
+  },
+  {
+    "caso": "Login inválido",
+    "method": "POST",
+    "route": "/login",
+    "expected": 401,
+    "actual": 401,
+    "response": {
+      "mensaje": "Credenciales no válidas"
+    }
+  },
+  {
+    "caso": "Login usuario inexistente",
+    "method": "POST",
+    "route": "/login",
+    "expected": 401,
+    "actual": 401,
+    "response": {
+      "mensaje": "Credenciales no válidas"
+    }
+  },
+  {
+    "caso": "Logout",
+    "method": "POST",
+    "route": "/logout",
+    "expected": 200,
+    "actual": 200,
+    "response": {
+      "mensaje": "Cierre de sesión solicitado correctamente"
+    }
+  },
+  {
+    "caso": "Ruta inexistente",
+    "method": "GET",
+    "route": "/inexistente",
+    "expected": 404,
+    "actual": 404,
+    "response": {
+      "mensaje": "Ruta no encontrada",
+      "path": "/inexistente"
+    }
+  }
+]

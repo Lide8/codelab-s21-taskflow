@@ -1,0 +1,168 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><title>Evidencias CodeLab S21</title><style>body{font:16px system-ui;background:#f3f6fa;color:#172b43;margin:32px;max-width:1100px}h1{color:#125b70}article{background:white;padding:16px;border-radius:12px;margin:12px 0;break-inside:avoid}pre{white-space:pre-wrap;font:13px monospace} .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}h3{margin:0;color:#155c47}</style><h1>TaskFlow · CodeLab S21</h1><p>Evidencias de ejecución real · 4 de noviembre de 2026 · Pruebas aprobadas</p><p>CRUD por capas y autenticación · Sin sesiones, cookies ni JWT.</p><p>Repositorio: https://github.com/Lide8/codelab-s21-taskflow</p><div class="grid"><article><h3>Listado · 200</h3><p>GET /api/tasks</p><pre>[
+  {
+    &quot;id&quot;: 1,
+    &quot;title&quot;: &quot;Diseñar API REST&quot;,
+    &quot;status&quot;: &quot;TODO&quot;,
+    &quot;project&quot;: &quot;TaskFlow&quot;
+  },
+  {
+    &quot;id&quot;: 2,
+    &quot;title&quot;: &quot;Separar rutas&quot;,
+    &quot;status&quot;: &quot;DONE&quot;,
+    &quot;project&quot;: &quot;TaskFlow&quot;
+  },
+  {
+    &quot;id&quot;: 3,
+    &quot;title&quot;: &quot;Preparar pruebas&quot;,
+    &quot;status&quot;: &quot;TODO&quot;,
+    &quot;project&quot;: &quot;DASW&quot;
+  }
+]</pre></article><article><h3>Crear tarea · 201</h3><p>POST /api/tasks</p><pre>{
+  &quot;id&quot;: 4,
+  &quot;title&quot;: &quot;Nueva tarea&quot;,
+  &quot;status&quot;: &quot;TODO&quot;,
+  &quot;project&quot;: &quot;TaskFlow&quot;
+}</pre></article><article><h3>Obtener tarea · 200</h3><p>GET /api/tasks/4</p><pre>{
+  &quot;id&quot;: 4,
+  &quot;title&quot;: &quot;Nueva tarea&quot;,
+  &quot;status&quot;: &quot;TODO&quot;,
+  &quot;project&quot;: &quot;TaskFlow&quot;
+}</pre></article><article><h3>Actualizar tarea · 200</h3><p>PUT /api/tasks/4</p><pre>{
+  &quot;id&quot;: 4,
+  &quot;title&quot;: &quot;Finalizada&quot;,
+  &quot;status&quot;: &quot;DONE&quot;,
+  &quot;project&quot;: &quot;DASW&quot;
+}</pre></article><article><h3>Filtros y orden · 200</h3><p>GET /api/tasks?status=DONE&amp;project=DASW&amp;sort=title</p><pre>[
+  {
+    &quot;id&quot;: 4,
+    &quot;title&quot;: &quot;Finalizada&quot;,
+    &quot;status&quot;: &quot;DONE&quot;,
+    &quot;project&quot;: &quot;DASW&quot;
+  }
+]</pre></article><article><h3>Estadísticas · 200</h3><p>GET /api/tasks/stats</p><pre>{
+  &quot;total&quot;: 4,
+  &quot;todo&quot;: 2,
+  &quot;done&quot;: 2
+}</pre></article><article><h3>Body tarea inválido · 400</h3><p>POST /api/tasks</p><pre>{
+  &quot;mensaje&quot;: &quot;Datos invalidos&quot;,
+  &quot;errores&quot;: [
+    {
+      &quot;path&quot;: &quot;title&quot;,
+      &quot;msg&quot;: &quot;El titulo es obligatorio&quot;,
+      &quot;location&quot;: &quot;body&quot;
+    },
+    {
+      &quot;path&quot;: &quot;status&quot;,
+      &quot;msg&quot;: &quot;El estado no es valido&quot;,
+      &quot;location&quot;: &quot;body&quot;
+    }
+  ]
+}</pre></article><article><h3>Eliminar sin body · 204</h3><p>DELETE /api/tasks/4</p><pre>null</pre></article><article><h3>ID inexistente · 404</h3><p>GET /api/tasks/4</p><pre>{
+  &quot;mensaje&quot;: &quot;No se encontró la tarea &quot;,
+  &quot;id&quot;: 4
+}</pre></article><article><h3>PUT inexistente · 404</h3><p>PUT /api/tasks/999</p><pre>{
+  &quot;mensaje&quot;: &quot;Tarea no encontrada&quot;
+}</pre></article><article><h3>DELETE inexistente · 404</h3><p>DELETE /api/tasks/999</p><pre>{
+  &quot;mensaje&quot;: &quot;Tarea no encontrada&quot;
+}</pre></article><article><h3>Compatibilidad crear v1 · 201</h3><p>POST /api/v1/tasks</p><pre>{
+  &quot;id&quot;: 4,
+  &quot;title&quot;: &quot;Legacy&quot;,
+  &quot;status&quot;: &quot;TODO&quot;,
+  &quot;project&quot;: &quot;TaskFlow&quot;
+}</pre></article><article><h3>Compatibilidad DELETE 200 v1 · 200</h3><p>DELETE /api/v1/tasks/4</p><pre>{
+  &quot;mensaje&quot;: &quot;Tarea Eliminada&quot;,
+  &quot;tareaEliminada&quot;: {
+    &quot;id&quot;: 4,
+    &quot;title&quot;: &quot;Legacy&quot;,
+    &quot;status&quot;: &quot;TODO&quot;,
+    &quot;project&quot;: &quot;TaskFlow&quot;
+  }
+}</pre></article><article><h3>Registro válido · 201</h3><p>POST /registro</p><pre>{
+  &quot;id&quot;: &quot;5ef7e744-6378-410d-be17-5935120cbde2&quot;,
+  &quot;name&quot;: &quot;Estudiante Demo&quot;,
+  &quot;email&quot;: &quot;demo@example.com&quot;,
+  &quot;createdAt&quot;: &quot;2026-11-04T22:56:42.315Z&quot;,
+  &quot;isActive&quot;: true
+}</pre></article><article><h3>Validación fallida · 400</h3><p>POST /registro</p><pre>{
+  &quot;mensaje&quot;: &quot;Datos invalidos&quot;,
+  &quot;errores&quot;: [
+    {
+      &quot;path&quot;: &quot;name&quot;,
+      &quot;msg&quot;: &quot;El nombre es obligatorio&quot;,
+      &quot;location&quot;: &quot;body&quot;
+    },
+    {
+      &quot;path&quot;: &quot;email&quot;,
+      &quot;msg&quot;: &quot;El email no es válido&quot;,
+      &quot;location&quot;: &quot;body&quot;
+    },
+    {
+      &quot;path&quot;: &quot;password&quot;,
+      &quot;msg&quot;: &quot;La contraseña debe tener entre 8 y 1024 caracteres&quot;,
+      &quot;location&quot;: &quot;body&quot;
+    }
+  ]
+}</pre></article><article><h3>Email repetido normalizado · 409</h3><p>POST /registro</p><pre>{
+  &quot;mensaje&quot;: &quot;El email ya está registrado&quot;
+}</pre></article><article><h3>Login válido · 200</h3><p>POST /login</p><pre>{
+  &quot;id&quot;: &quot;5ef7e744-6378-410d-be17-5935120cbde2&quot;,
+  &quot;name&quot;: &quot;Estudiante Demo&quot;,
+  &quot;email&quot;: &quot;demo@example.com&quot;,
+  &quot;createdAt&quot;: &quot;2026-11-04T22:56:42.315Z&quot;,
+  &quot;isActive&quot;: true
+}</pre></article><article><h3>Login inválido · 401</h3><p>POST /login</p><pre>{
+  &quot;mensaje&quot;: &quot;Credenciales no válidas&quot;
+}</pre></article><article><h3>Login usuario inexistente · 401</h3><p>POST /login</p><pre>{
+  &quot;mensaje&quot;: &quot;Credenciales no válidas&quot;
+}</pre></article><article><h3>Logout · 200</h3><p>POST /logout</p><pre>{
+  &quot;mensaje&quot;: &quot;Cierre de sesión solicitado correctamente&quot;
+}</pre></article><article><h3>Ruta inexistente · 404</h3><p>GET /inexistente</p><pre>{
+  &quot;mensaje&quot;: &quot;Ruta no encontrada&quot;,
+  &quot;path&quot;: &quot;/inexistente&quot;
+}</pre></article></div><h2>Persistencia: usuario registrado</h2><pre>[
+  {
+    &quot;id&quot;: &quot;5ef7e744-6378-410d-be17-5935120cbde2&quot;,
+    &quot;name&quot;: &quot;Estudiante Demo&quot;,
+    &quot;email&quot;: &quot;demo@example.com&quot;,
+    &quot;createdAt&quot;: &quot;2026-11-04T22:56:42.315Z&quot;,
+    &quot;isActive&quot;: true,
+    &quot;password&quot;: &quot;[OCULTO]&quot;
+  }
+]</pre><h2>Morgan · registro real de las pruebas</h2><pre>GET /api/tasks 200 3.721 ms
+POST /api/tasks 201 47.910 ms
+GET /api/tasks/4 200 0.758 ms
+PUT /api/tasks/4 200 2.176 ms
+GET /api/tasks?status=DONE&amp;project=DASW&amp;sort=title 200 0.347 ms
+GET /api/tasks/stats 200 0.287 ms
+POST /api/tasks 400 1.287 ms
+DELETE /api/tasks/4 204 0.210 ms
+GET /api/tasks/4 404 0.956 ms
+PUT /api/tasks/999 404 1.490 ms
+DELETE /api/tasks/999 404 0.453 ms
+POST /api/v1/tasks 201 0.946 ms
+DELETE /api/v1/tasks/4 200 0.199 ms
+✔ CRUD completo, filtros, stats, errores y compatibilidad original (206.1539ms)
+POST /registro 201 62.017 ms
+POST /registro 400 2.869 ms
+POST /registro 409 5.219 ms
+POST /login 200 47.909 ms
+POST /login 401 46.129 ms
+POST /login 401 1.852 ms
+POST /logout 200 0.515 ms
+POST /registro 201 58.691 ms
+POST /registro 409 77.291 ms
+✔ Seis casos de autenticación y persistencia sin secretos en respuestas (270.2956ms)
+GET /api/health 200 0.382 ms
+GET /api/health 200 0.166 ms
+POST /registro 400 1.159 ms
+GET /inexistente 404 0.252 ms
+✔ Helmet, CORS, JSON inválido y errores centralizados (9.1607ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1288.3682
+</pre></html>
