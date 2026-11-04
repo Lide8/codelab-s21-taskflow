@@ -1,0 +1,12 @@
+import { Router } from 'express';
+import * as controller from '../controllers/task.controller.js';
+import { taskRules } from '../middlewares/task.validator.js';
+import { validateRequest } from '../middlewares/validate.request.js';
+const router = Router();
+router.get('/stats', controller.stats);
+router.get('/', controller.list);
+router.get('/:id', controller.getById);
+router.post('/', taskRules, validateRequest, controller.create);
+router.put('/:id', taskRules, validateRequest, controller.update);
+router.delete('/:id', controller.remove);
+export default router;
