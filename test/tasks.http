@@ -1,0 +1,57 @@
+
+@baseUrl = http://localhost:3000
+
+
+### GET / - Entrega index.html mediante ruta Express
+GET {{baseUrl}}/
+Accept: text/html
+
+### GET /assets/css/app.css - Entrega recurso estático
+GET {{baseUrl}}/assets/css/app.css
+Accept: text/css
+
+### GET /api/v1/tasks - Tareas completas
+GET {{baseUrl}}/api/v1/tasks
+Accept: application/json
+
+### GET /api/v1/tasks/1 - Una tarea
+GET {{baseUrl}}/api/v1/tasks/4
+Accept: application/json
+
+### GET /api/v1/tasks/999 - 404 y JSON
+GET {{baseUrl}}/api/v1/tasks/999
+Accept: application/json
+
+### GET /api/v1/tasks?status=TODO - Coincidencias por estado
+GET {{baseUrl}}/api/v1/tasks?status=DONE&project=TaskFlow
+Accept: application/json
+
+### POST /api/v1/tasks válido - 201 y tarea creada
+POST {{baseUrl}}/api/v1/tasks
+Content-Type: application/json
+
+{
+  "title": "Agregar más rutar",
+  "description": "Falta agregar ruta para PUT y DELETE, tal vez PATCH",
+    "status": "TODO"
+}
+
+###
+PUT {{baseUrl}}/api/v1/tasks/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Agregar más rutas Con Validaciones",
+  "description": "Falta agregar ruta para PUT y DELETE, tal vez PATCH",
+    "status": "TODO"
+}
+
+### POST /api/v1/tasks vacío - 400 y JSON
+POST {{baseUrl}}/api/v1/tasks
+Content-Type: application/json
+
+{}
+
+### GET /api/v1/tasks/stats - Totales correctos
+GET {{baseUrl}}/api/v1/tasks/stats
+Accept: application/json
